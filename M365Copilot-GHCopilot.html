@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Two-Tier Agentic AI Workflow — The Economic Argument</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f6f8fa; margin: 0; padding: 24px; color: #24292f; }
+
+  /* ============ HEADER — locked ============ */
+  .hero {
+    background: #fff;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    padding: 22px 28px;
+    margin: 0 auto 24px auto;
+    max-width: 1600px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .hero h1 { font-size: 38px; font-weight: 800; margin: 0; color: #007A33; text-align: center; letter-spacing: -0.3px; }
+  .hero .sub-row1 { text-align: center; font-size: 18px; font-weight: 600; color: #24292f; margin-top: 12px; }
+  .hero .sub-row1 .pill { display: inline-block; background: #f0f9f2; border: 1px solid #007A33; color: #007A33; border-radius: 20px; padding: 4px 14px; margin: 0 4px; }
+  .hero .sub-row1 .arrow { font-size: 22px; vertical-align: middle; margin: 0 8px; color: #007A33; font-weight: 700; }
+  .hero .sub-row2 { text-align: center; font-size: 15px; color: #57606a; margin-top: 10px; font-weight: 400; }
+  .hero .sub-row2 strong { color: #007A33; font-weight: 700; }
+
+  /* ============ MAIN LAYOUT ============ */
+  .layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    align-items: flex-start;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* LEFT FRAME */
+  .diagram-frame {
+    flex: 2 1 0;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .diagram-inner { min-width: 0; width: 100%; }
+  .diagram-inner pre.mermaid { background: transparent; margin: 0; width: 100%; }
+  .diagram-inner pre.mermaid svg {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    display: block;
+  }
+
+  .notes-col { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; gap: 14px; }
+  .notes-group { display: flex; flex-direction: column; gap: 14px; }
+
+  .external-note {
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  .note-tier1 { background: #e6f4ea; border: 2px solid #137333; color: #0d3b1f; }
+  .note-tier1 strong { color: #0b5e26; }
+  .note-tier2 { background: #fce8e6; border: 2px solid #c5221f; color: #5c1a16; }
+  .note-tier2 strong { color: #a51b18; }
+  .note-handoff { background: #fff8c5; border: 2px solid #9a6700; color: #4d2d00; }
+  .note-handoff strong { color: #7a4f00; }
+  .note-base64 { background: #ddf4ff; border: 2px dashed #0969da; color: #0a3069; }
+  .note-base64 strong { color: #0550ae; }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.3px;
+  }
+  .badge-free { background: #137333; color: #fff; }
+  .badge-paid { background: #c5221f; color: #fff; }
+  .badge-handoff { background: #9a6700; color: #fff; }
+  .badge-tip { background: #0969da; color: #fff; }
+
+  /* ============ RIGHT FRAME — text scaled to match left (15px body) ============ */
+  .econ-col {
+    flex: 1 1 0;
+    min-width: 0;
+    box-sizing: border-box;
+    background: #fff;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .econ-col h2 {
+    font-size: 22px;
+    margin-top: 0;
+    border-bottom: 2px solid #d0d7de;
+    padding-bottom: 10px;
+  }
+  .econ-col h2 span {
+    font-size: 15px !important;
+  }
+  .econ-col h3 {
+    font-size: 17px;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    color: #24292f;
+  }
+  .econ-col p, .econ-col li {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+  .econ-col ul { padding-left: 22px; margin: 8px 0; }
+
+  table.econ {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    margin: 10px 0 14px;
+  }
+  table.econ th, table.econ td {
+    border: 1px solid #d0d7de;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  table.econ thead th { background: #f6f8fa; font-weight: 600; }
+  table.econ td.flat { background: #f0f9f2; color: #0d3b1f; }
+  table.econ td.paid { background: #fdecea; color: #5c1a16; }
+
+  .insight {
+    background: #f6f8fa;
+    border-left: 4px solid #6e7781;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 15px;
+    line-height: 1.55;
+    border-radius: 0 4px 4px 0;
+  }
+  .insight.bold-claim { border-left-color: #0969da; background: #ddf4ff; color: #0a3069; }
+
+  .winloss { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .winloss .box {
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+  .winloss .win { background: #e6f4ea; border: 1px solid #137333; color: #0d3b1f; }
+  .winloss .lose { background: #fce8e6; border: 1px solid #c5221f; color: #5c1a16; }
+  .winloss h4 { margin: 0 0 8px; font-size: 16px; }
+  .winloss ul { margin: 0; padding-left: 20px; }
+  .winloss li { font-size: 15px; line-height: 1.5; }
+
+  @media (max-width: 1100px) {
+    .diagram-frame, .econ-col { flex: 0 0 100%; }
+  }
+  @media (max-width: 600px) {
+    .diagram-frame { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Two-Tier Agentic AI Workflow</h1>
+  <div class="sub-row1">
+    <span class="pill">M365 Copilot &mdash; Opus, flat-rate</span>
+    <span class="arrow">&rarr;</span>
+    <span class="pill">GitHub Copilot Business &mdash; Opus agent, metered</span>
+  </div>
+  <div class="sub-row2">
+    Arbitraging <strong>two billing surfaces</strong> over <strong>one model family</strong> &mdash; think free at the front, bill at the back.
+  </div>
+</header>
+
+<div class="layout">
+
+  <div class="diagram-frame">
+
+    <div class="diagram-inner">
+<pre class="mermaid">
+flowchart TB
+  subgraph T1["🟢 TIER 1 — M365 Copilot Chat (Opus / Claude)"]
+    direction TB
+
+    subgraph A["PHASE A — Discovery"]
+      A1["📂 Read source via office365_open / SharePoint / OneDrive"]
+      A2["📚 Cross-reference cmdlet docs, framework APIs, library signatures"]
+      A3["🧠 Recall prior architectural decisions from persistent memory"]
+      A4["🌐 Web search for fresh docs, breaking changes, deprecations"]
+      A5["🔐 <b>Base64-encoded .txt uploads</b> bypass syntax-parser failures"]
+    end
+
+    subgraph B["PHASE B — Reasoning"]
+      B1["🗺️ Map dependency graph & blast radius"]
+      B2["⚠️ Identify ambiguities, edge cases, naming collisions"]
+      B3["🧭 Surface architectural decisions needing human judgment"]
+      B4["⚖️ Compare 2–3 implementation strategies with tradeoffs"]
+    end
+
+    subgraph C["PHASE C — Pre-Flight Validation"]
+      C1["🔍 Audit every external API call against verified signatures"]
+      C2["✅ Confirm assumed variable/function names actually exist"]
+      C3["📊 Self-assess confidence — if &lt; 80%, request more source"]
+      C4["🎚️ Recommend thinking-effort level (Low / Med / High) for Tier 2"]
+    end
+
+    subgraph D["PHASE D — Prompt Synthesis"]
+      D1["📄 Emit narrowly-scoped markdown prompt:<br/>• Whitelist of files in scope<br/>• Blacklist of files out of scope<br/>• Pre-made design decisions<br/>• Acceptance criteria + non-goals<br/>• Embedded thinking-effort recommendation"]
+    end
+
+    A --> B --> C --> D
+  end
+
+  H{{"📦 HANDOFF — Validated Markdown Blueprint<br/><i>typically 200+ lines, often 500–1000</i>"}}
+  D --> H
+
+  subgraph T2["🔴 TIER 2 — GitHub Copilot Business (Claude Opus agent)"]
+    direction TB
+
+    subgraph E["PHASE E — Mechanical Execution ONLY"]
+      E1["🔧 Apply the pre-validated plan"]
+      E2["✏️ Edit files inside the whitelist"]
+      E3["🚫 No exploratory grep across the repo"]
+      E4["🚫 No 'is this the right design?' re-litigation"]
+      E5["🚫 No re-asking questions Tier 1 already answered"]
+    end
+
+    subgraph F["PHASE F — Verification"]
+      F1["🧪 Run tests / linters / build per acceptance criteria"]
+      F2["📤 Report diff, not narrative"]
+    end
+
+    E --> F
+  end
+
+  H --> T2
+
+  classDef tier1 fill:#e6f4ea,stroke:#137333,stroke-width:3px,color:#0d3b1f;
+  classDef tier2 fill:#fce8e6,stroke:#c5221f,stroke-width:3px,color:#5c1a16;
+  classDef phase fill:#ffffff,stroke:#6e7781,stroke-width:1px,color:#24292f;
+  classDef handoff fill:#fff8c5,stroke:#9a6700,stroke-width:3px,color:#4d2d00;
+  classDef base64 fill:#ddf4ff,stroke:#0969da,stroke-width:2px,color:#0a3069;
+
+  class T1 tier1;
+  class T2 tier2;
+  class A,B,C,D,E,F phase;
+  class H handoff;
+  class A5 base64;
+</pre>
+    </div>
+
+    <aside class="notes-col">
+
+      <div class="notes-group notes-top">
+        <div class="external-note note-tier1">
+          <div><span class="badge badge-free">TIER 1 &middot; ALL PHASES</span></div>
+          <strong>Every phase is flat-rate.</strong> Discovery, reasoning, pre-flight, prompt synthesis &mdash; none of it is metered. Explore unboundedly: read 50 files, chase three dead-end designs, ask 20 clarifying questions. The bill doesn't move.
+        </div>
+
+        <div class="external-note note-base64">
+          <div><span class="badge badge-tip">PRO TIP &middot; BASE64 UPLOAD</span></div>
+          <strong>Bypass the Python stream-reader.</strong> When source has backticks, <code>$variables</code>, or nested quotes that mangle file parsing, <strong>base64-encode the file as <code>.txt</code></strong> and upload that. Copilot decodes it cleanly &mdash; no escape corruption, no truncation.
+        </div>
+      </div>
+
+      <div class="notes-group notes-bottom">
+        <div class="external-note note-handoff">
+          <div><span class="badge badge-handoff">HANDOFF &middot; BLUEPRINT</span></div>
+          <strong>Not a one-liner &mdash; a full work order.</strong> The markdown prompt averages <strong>200+ lines</strong>, often <strong>500&ndash;1,000</strong> for multi-file refactors. Bakes in whitelist/blacklist, design choices, acceptance criteria, non-goals, and thinking-effort dial. Longer blueprint = narrower agent reasoning surface = fewer wandering credits.
+        </div>
+
+        <div class="external-note note-tier2">
+          <div><span class="badge badge-paid">TIER 2 &middot; ALL PHASES</span></div>
+          <strong>Every token costs premium credits.</strong> Execution and verification are both billed &mdash; every thought, every grep, every clarifying question burns credits. Keep Tier 2 on rails: mechanical execution of a pre-validated plan, nothing more. Exploration here is the most expensive failure mode in the entire workflow.
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <div class="econ-col">
+
+    <h2>💰 The Economic Argument <span style="font-weight:400;color:#57606a;">(the whole point)</span></h2>
+
+    <table class="econ">
+      <thead>
+        <tr><th>Activity</th><th>Tier 1 (M365 Chat)</th><th>Tier 2 (GH Copilot)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Reading source files</td><td class="flat">Flat-rate (free at point of use)</td><td class="paid">Premium credits per token</td></tr>
+        <tr><td>Architectural reasoning</td><td class="flat">Flat-rate</td><td class="paid">Premium credits</td></tr>
+        <tr><td>Blind exploration / grep-and-pray</td><td class="flat">Flat-rate</td><td class="paid">Most expensive failure mode</td></tr>
+        <tr><td>Asking clarifying questions</td><td class="flat">Flat-rate, conversational</td><td class="paid">Burns credits on a stalled turn</td></tr>
+        <tr><td>Re-running after wrong assumption</td><td class="flat">Flat-rate</td><td class="paid">Doubles the credit spend</td></tr>
+        <tr><td>Applying a known-good diff</td><td class="flat">N/A (no repo write)</td><td class="paid">Cheapest possible Tier 2 use</td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight bold-claim">
+      <strong>The core insight:</strong> Claude Opus is the same underlying model in both tiers, but the billing surface is radically different. M365 Copilot Chat is an <em>unmetered conversational front-end</em> to the same reasoning capability that GitHub Copilot meters by the token. So you move every byte of reasoning that can happen <em>before</em> the agent touches the repo into Tier 1.<br><br>
+      <strong>You are effectively arbitraging two cost models for one model family.</strong>
+    </div>
+
+    <h3>🧠 What Tier 1 Is Really Doing</h3>
+    <p>Think of Tier 1 as a <strong>senior engineer doing the design review and writing the work order</strong>, and Tier 2 as the <strong>contractor who shows up to build exactly what's on the work order</strong>. The contractor is expensive per hour, so you don't pay them to figure out <em>what</em> to build &mdash; you pay them to <em>build it</em>.</p>
+    <p>Concretely, Tier 1 absorbs:</p>
+    <ul>
+      <li><strong>The search cost</strong> &mdash; pulling in docs, source, prior decisions, framework references.</li>
+      <li><strong>The wrong-turn cost</strong> &mdash; exploring two or three approaches and discarding the bad ones happens in chat, not in the agent.</li>
+      <li><strong>The clarification cost</strong> &mdash; every "wait, did you mean X or Y?" round-trip is free here and ruinous there.</li>
+      <li><strong>The verification-of-assumptions cost</strong> &mdash; confirming a function exists, a parameter is real, a file path is correct, before the agent ever spins up.</li>
+    </ul>
+
+    <h3>⏱️ The Honest Tradeoff: Time</h3>
+    <p>This is not a free lunch &mdash; you're paying in <strong>wall-clock time</strong> instead of credits:</p>
+    <ul>
+      <li><strong>Tier 1 round-trips are slow.</strong> A real design conversation might span 5&ndash;20 turns of chat, file uploads, and back-and-forth. That's minutes to an hour of human-in-the-loop time.</li>
+      <li><strong>You are the bottleneck.</strong> Tier 2 can rip through a 10-file refactor unattended; Tier 1 needs you to read, react, and steer.</li>
+      <li><strong>Context-switching tax.</strong> Moving from "thinking partner" mode in chat to "review the agent's diff" mode in the IDE has its own cognitive cost.</li>
+      <li><strong>Diminishing returns on small tasks.</strong> For a one-line typo fix, the Tier 1 pre-flight is overhead. The two-tier model pays off as task complexity rises.</li>
+    </ul>
+    <div class="insight">
+      So the tradeoff is: <strong>you spend more of your own time in exchange for spending fewer credits</strong> and getting a higher first-pass success rate from the agent. For mechanical fixes, skip Tier 1. For anything architectural or anything you'd hate to see the agent flail through, Tier 1 is the cheap insurance policy.
+    </div>
+
+    <h3>📌 When This Workflow Wins vs. Loses</h3>
+    <div class="winloss">
+      <div class="box win">
+        <h4>✅ Wins big when</h4>
+        <ul>
+          <li>Multi-file refactors across an unfamiliar or large codebase</li>
+          <li>Anything touching external APIs / cmdlets / SDKs where parameter audits matter</li>
+          <li>Greenfield design where the agent could plausibly pick the wrong pattern</li>
+          <li>Work where a wrong turn costs more credits than a careful plan costs time</li>
+        </ul>
+      </div>
+      <div class="box lose">
+        <h4>⚠️ Loses (or breaks even) when</h4>
+        <ul>
+          <li>Single-file, well-scoped, mechanical edits</li>
+          <li>Tasks where you already have the design fully in your head</li>
+          <li>Time-critical fixes where wall-clock matters more than credit spend</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    securityLevel: 'loose',
+    flowchart: { htmlLabels: true, curve: 'basis', nodeSpacing: 40, rankSpacing: 50 }
+  });
+</script>
+
+</body>
+</html>
